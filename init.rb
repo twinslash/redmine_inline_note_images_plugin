@@ -9,5 +9,5 @@ Redmine::Plugin.register :redmine_inline_note_images_plugin do
   url 'https://github.com/anjlab/redmine_inline_note_images_plugin'
   author_url 'http://anjlab.com'
 
-    settings :default => {'hide_comments_images' => false}, :partial => 'settings/comment_images'
+  settings :default => {'hide_comments_images' => false}, :partial => 'settings/comment_images'
 end
