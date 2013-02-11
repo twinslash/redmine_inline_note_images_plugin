@@ -8,7 +8,7 @@ module ImagesDuplicationHelperPatch
           #=====patch begin======
           comments_attachments = Array.new
 
-          if Setting.plugin_redmine_inline_note_images_plugin['hide_comments_images']
+          if container.is_a?(Issue) && Setting.plugin_redmine_inline_note_images_plugin['hide_comments_images']
 
             container.journals.each do |journal|
               journal.details.where(property: 'attachment').each do |a|
