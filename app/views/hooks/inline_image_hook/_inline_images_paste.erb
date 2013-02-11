@@ -3,14 +3,18 @@
 	<% attachments.push Attachment.find_by_id a.prop_key %>
 <% end %>
 
-<% images = attachments.select(&:image?) %>
-<% if images.any? %>
-	<div class="attachments">
-	<% images.each do |image| %>
-		<%= link_to image_tag(url_for({:controller => 'attachments', :action => 'thumbnail', :id => image })),
-                          {:controller => 'attachments', :action => 'show', :id => image, :filename => image.filename },
-                          :class => 'lightbox', :rel => 'attachments',
-                          :title => "#{image.filename}#{ ('-' + image.description) unless image.description.blank? }" %>
-	<% end %>
-	</div>
+<% attachments.reject! { |attachment| attachment.nil? } %>
+
+<% unless attachments.empty? %>
+  <% images = attachments.select(&:image?) %>
+  <% if images.any? %>
+  	<div class="attachments">
+  	<% images.each do |image| %>
+  		<%= link_to image_tag(url_for({:controller => 'attachments', :action => 'thumbnail', :id => image })),
+                            {:controller => 'attachments', :action => 'show', :id => image, :filename => image.filename },
+                            :class => 'lightbox', :rel => 'attachments',
+                            :title => "#{image.filename}#{ ('-' + image.description) unless image.description.blank? }" %>
+  	<% end %>
+  	</div>
+  <% end %>
 <% end %>
