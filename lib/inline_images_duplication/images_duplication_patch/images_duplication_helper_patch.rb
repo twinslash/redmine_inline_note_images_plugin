@@ -17,9 +17,9 @@ module ImagesDuplicationHelperPatch
             end
           end
           #=======patch end=======
-          options = {:deletable => container.attachments_deletable?, :author => true}.merge(options)
+          options = {:deletable => container.attachments_deletable?, :author => true, :comments_attachments => comments_attachments }.merge(options)
           render :partial => 'attachments/links',
-            :locals => {:attachments => container.attachments - comments_attachments, :options => options, :thumbnails => (options[:thumbnails] && Setting.thumbnails_enabled?)}
+            :locals => {:attachments => container.attachments, :options => options, :thumbnails => (options[:thumbnails] && Setting.thumbnails_enabled?)}
         end
       end
     end
