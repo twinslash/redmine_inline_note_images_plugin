@@ -1,0 +1,28 @@
+<% attachments = Array.new %>
+<% journal.details.where(property: 'attachment').each do |a| %>
+  <% attachments.push Attachment.find_by_id a.prop_key %>
+<% end %>
+
+<% attachments.reject! { |attachment| attachment.nil? } %>
+
+<% unless attachments.empty? %>
+  <% images = attachments.select(&:image?) %>
+  <% if images.any? %>
+    <div class="attachments">
+    <% images.each do |image| %>
+      <%= link_to image_tag(url_for({:controller => 'attachments', :action => 'thumbnail', :id => image })),
+                            {:controller => 'attachments', :action => 'show', :id => image, :filename => image.filename },
+                            :class => 'lightbox', :rel => 'attachments',
+                            :title => "#{image.filename}#{ ('-' + image.description) unless image.description.blank? }" %>
+    <% end %>
+    </div>
+      <script type="text/javascript">
+        <% if  Setting.thumbnails_enabled?%>
+          $('div.thumbnails.images div a.lightbox[href*=<%= images.map(&:id).join('|') %>]').parent().remove()
+        <% else %>
+          $('div.attachments div.images a.lightbox[href*=<%= images.map(&:id).join('|') %>]').remove()
+        <% end %>
+      </script>
+  <% end %>
+<% end %>
+
