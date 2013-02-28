@@ -17,11 +17,13 @@
     <% end %>
     </div>
       <script type="text/javascript">
-        <% if  Setting.thumbnails_enabled?%>
-          $('div.thumbnails.images div a.lightbox[href*=<%= images.map(&:id).join('|') %>]').parent().remove()
-        <% else %>
-          $('div.attachments div.images a.lightbox[href*=<%= images.map(&:id).join('|') %>]').remove()
-        <% end %>
+          <% images.map(&:id).each do |id| %>
+            <% if  Setting.thumbnails_enabled?%>
+              $('div.thumbnails.images div a.lightbox[href*=<%= id %>]').parent().remove()
+            <% else %>
+              $('div.attachments div.images a.lightbox[href*=<%= id%>]').remove()
+            <% end %>
+          <%end%>
       </script>
   <% end %>
 <% end %>
