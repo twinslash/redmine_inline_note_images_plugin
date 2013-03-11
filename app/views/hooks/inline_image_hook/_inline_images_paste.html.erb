@@ -19,9 +19,11 @@
       <script type="text/javascript">
           <% images.map(&:id).each do |id| %>
             <% if  Setting.thumbnails_enabled?%>
-              $('div.thumbnails.images div a.lightbox[href*=<%= id %>]').parent().remove()
+              $('div.thumbnails.images div a.lightbox img[alt*=<%= id %>]').parent().parent().remove()
+              if( $.trim($("div.thumbnails.images").html()).length == 0 ) {$("div.thumbnails.images").remove()}
             <% else %>
-              $('div.attachments div.images a.lightbox[href*=<%= id%>]').remove()
+              $("div.attachments div.images a.lightbox img[src*='attachments/<%=id%>']").parent().remove()
+              if( $.trim($("div.attachments div.images").html()).length == 0 ) {$("div.attachments div.images").remove()}
             <% end %>
           <%end%>
       </script>
